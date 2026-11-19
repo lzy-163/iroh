@@ -1,22 +1,3 @@
-# Run all tests, including flaky test.
-#
-# The default CI workflow ignores flaky tests.  This workflow will run
-# all tests, including ignored ones.
-#
-# To use this workflow you can either:
-#
-# - Label a PR with "flaky-test", the normal CI workflow will not run
-#   any jobs but the jobs here will be run.  Note that to merge the PR
-#   you'll need to remove the label eventually because the normal CI
-#   jobs are required by branch protection.
-#
-# - Manually trigger the workflow, you may choose a branch for this to
-#   run on.
-#
-# Additionally this jobs runs once a day on a schedule.
-#
-# Currently doctests are not run by this workflow.
-
 name: Flaky CI
 
 on:
@@ -46,7 +27,7 @@ jobs:
     uses: './.github/workflows/tests.yaml'
     with:
       flaky: true
-      git-ref: ${{ inputs.branch }}
+      git-ref: ${{ inputs.branch || github.event.pull_request.head.ref || github.ref_name }}
   notify:
     needs: tests
     if: ${{ always() }}
