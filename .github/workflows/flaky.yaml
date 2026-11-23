@@ -46,7 +46,7 @@ jobs:
     uses: './.github/workflows/tests.yaml'
     with:
       flaky: true
-      git-ref: ${{ inputs.branch }}
+      git-ref: ${{ inputs.branch || github.ref }}
   notify:
     needs: tests
     if: ${{ always() }}
