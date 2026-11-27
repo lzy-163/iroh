@@ -49,7 +49,7 @@ jobs:
       git-ref: ${{ inputs.branch }}
   notify:
     needs: tests
-    if: ${{ always() }}
+    if: ${{ always() && needs.tests.result != 'skipped' }}
     runs-on: ubuntu-latest
     steps:
       - name: Extract test results
